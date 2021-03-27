@@ -110,7 +110,9 @@ public class Robot extends TimedRobot {
     if (side != Sides.FOLLOWER) {
     
       
-      CANEncoder encoder = motor.getAlternateEncoder(AlternateEncoderType.kQuadrature, ENCODER_EPR);
+      CANEncoder encoder = motor.getEncoder();
+      //CANEncoder encoder = motor.getEncoder(EncoderType.kQuadrature, ENCODER_EPR);
+
 
 
 
@@ -121,7 +123,7 @@ public class Robot extends TimedRobot {
         // set right side methods = encoder methods
 
 
-        encoder.setInverted(true);
+        //encoder.setInverted(true);
         rightEncoderPosition = ()
           -> encoder.getPosition() * encoderConstant;
         rightEncoderRate = ()
@@ -129,7 +131,7 @@ public class Robot extends TimedRobot {
 
         break;
       case LEFT:
-        encoder.setInverted(false);
+        //encoder.setInverted(false);
         leftEncoderPosition = ()
           -> encoder.getPosition() * encoderConstant;
         leftEncoderRate = ()
@@ -163,9 +165,9 @@ public class Robot extends TimedRobot {
         
     
 
-    CANSparkMax rightMotor = setupCANSparkMax(1, Sides.RIGHT, true);
-    CANSparkMax rightFollowerID2 = setupCANSparkMax(2, Sides.FOLLOWER, true);
-    rightFollowerID2.follow(rightMotor, true);
+    CANSparkMax rightMotor = setupCANSparkMax(1, Sides.RIGHT, false);
+    CANSparkMax rightFollowerID2 = setupCANSparkMax(2, Sides.FOLLOWER, false);
+    rightFollowerID2.follow(rightMotor, false);
     drive = new DifferentialDrive(leftMotor, rightMotor);
     drive.setDeadband(0);
 
@@ -218,7 +220,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    drive.arcadeDrive(-stick.getY(), stick.getX());
+    drive.tankDrive(-stick.getRawAxis(1), -stick.getRawAxis(3));
   }
 
   @Override
