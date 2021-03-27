@@ -60,7 +60,7 @@ public class Robot extends TimedRobot {
   static private double ENCODER_EDGES_PER_REV = 42;
   static private int PIDIDX = 0;
   static private int ENCODER_EPR = 42;
-  static private double GEARING = 12.75;//Alternete gearing 10.71,8.45
+  static private double GEARING = 10.71;//Alternete gearing 10.71,8.45 not 12.75
   
   private double encoderConstant = (1 / GEARING);
 
@@ -113,6 +113,7 @@ public class Robot extends TimedRobot {
       CANEncoder encoder = motor.getEncoder();
       //CANEncoder encoder = motor.getEncoder(EncoderType.kQuadrature, ENCODER_EPR);
 
+      encoder.setPosition(0);
 
 
 
@@ -125,9 +126,9 @@ public class Robot extends TimedRobot {
 
         //encoder.setInverted(true);
         rightEncoderPosition = ()
-          -> encoder.getPosition() * encoderConstant;
+          -> -encoder.getPosition() * encoderConstant;
         rightEncoderRate = ()
-          -> encoder.getVelocity() * encoderConstant / 60.;
+          -> -encoder.getVelocity() * encoderConstant / 60.;
 
         break;
       case LEFT:
