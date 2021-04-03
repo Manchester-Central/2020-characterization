@@ -62,7 +62,8 @@ public class Robot extends TimedRobot {
   static private int ENCODER_EPR = 42;
   static private double GEARING = 10.71;//Alternete gearing 10.71,8.45 not 12.75
   
-  private double encoderConstant = (1 / GEARING);
+ // private double encoderConstant = (1 / GEARING);
+  private double encoderConstant = (1 / 23.715877840);
 
   Joystick stick;
   DifferentialDrive drive;
